@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperature Converter</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    .converter-form {
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 offset-md-4 converter-form">
+        <form>
+          <div class="form-group">
+            <label for="inputTemp">Temperature:</label>
+            <input type="number" class="form-control" id="inputTemp" placeholder="Enter temperature" required>
+          </div>
+          <div class="form-group">
+            <label for="selectFrom">From:</label>
+            <select class="form-control" id="selectFrom">
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit">Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="selectTo">To:</label>
+            <select class="form-control" id="selectTo">
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit">Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="convertTemperature()">Convert</button>
+          <div id="result" class="mt-3"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function convertTemperature(){
+      let tempInput = document.getElementById("inputTemp").value;
+      let fromUnit = document.getElementById("selectFrom").value;
+      let toUnit = document.getElementById("selectTo").value;
+
+      if(fromUnit === toUnit){
+        document.getElementById("result").innerHTML = "Please select different units.";
+        return;
+      }
+
+      let result = 0;
+
+      if(fromUnit === "celsius"){
+        if(toUnit === "fahrenheit"){
+          // Celsius to Fahrenheit conversion
+          result = (tempInput * 9/5) + 32;
+        } else if(toUnit === "kelvin"){
+          // Celsius to Kelvin conversion
+          result = parseInt(tempInput) + 273.15;
+        }
+      } else if(fromUnit === "fahrenheit"){
+        if(toUnit === "celsius"){
+          // Fahrenheit to Celsius conversion
+          result = (tempInput - 32) * 5/9;
+        } else if(toUnit === "kelvin"){
+          // Fahrenheit to Kelvin conversion
+          result = (tempInput - 32) * 5/9 + 273.15;
+        }
+      } else if(fromUnit === "kelvin"){
+        if(toUnit === "celsius"){
+          // Kelvin to Celsius conversion
+          result = parseInt(tempInput) - 273.15;
+        } else if(toUnit === "fahrenheit"){
+          // Kelvin to Fahrenheit conversion
+          result = (tempInput - 273.15) * 9/5 + 32;
+        }
+      }
+
+      document.getElementById("result").innerHTML = "Result: " + result.toFixed(2) + " " + toUnit;
+    }
+  </script>
+</body>
+</html>
